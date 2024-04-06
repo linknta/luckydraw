@@ -1,0 +1,16 @@
+_BUILD_ARGS_TAG ?= ${GIT_HASH}
+_BUILD_ARGS_RELEASE_TAG ?= latest
+_BUILD_ARGS_DOCKERFILE ?= Dockerfile
+DOCKER_USERNAME ?= linknta
+APPLICATION_NAME ?= luckydraw
+ 
+build:
+    docker build --tag ${DOCKER_USERNAME}/${APPLICATION_NAME}:${GIT_HASH} .
+ 
+push:
+    docker push ${DOCKER_USERNAME}/${APPLICATION_NAME}:${GIT_HASH}
+
+release:
+    docker pull ${DOCKER_USERNAME}/${APPLICATION_NAME}:${GIT_HASH}
+    docker tag  ${DOCKER_USERNAME}/${APPLICATION_NAME}:${GIT_HASH} ${DOCKER_USERNAME}/${APPLICATION_NAME}:latest
+    docker push ${DOCKER_USERNAME}/${APPLICATION_NAME}:latest
