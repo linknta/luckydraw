@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package luckydraw.v1;
+
+option go_package = "github.com/linknta/luckydraw/api/v1/luckydraw;luckydraw";
+
+service Luckydraw {
+  rpc Roll(RollRquest) returns (RollReply);
+}
+
+message RollRquest {}
+message RollReply {
+  Result result = 1;
+  State state   = 2;
+}
+
+// model
+message Cell {
+  int32 row     = 1;
+  int32 reel    = 2;
+  string symbol = 3;
+}
+
+message Win {
+  string symbol = 1;
+  int64 coin    = 2;
+}
+
+message Result {
+  repeated Cell cells = 1;
+  Win win             = 2;
+}
+
+message State {
+  int64 total_coin      = 1;
+  int64 remaining_spins = 2;
+  Result last_result    = 3;
+}
